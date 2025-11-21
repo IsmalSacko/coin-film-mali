@@ -1,0 +1,36 @@
+services:
+  db:
+    image: mariadb:10.11
+    container_name: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: sacko      # ou root, mais même mot partout
+      MYSQL_DATABASE: cineZoneDB
+    ports:
+      - "3307:3306"                   # ⚠️ BIEN ceci : host 3307 -> conteneur 3306
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - lamp_net
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: sacko             # même que MYSQL_ROOT_PASSWORD
+    depends_on:
+      - db
+    networks:
+      - lamp_net
+
+networks:
+  lamp_net:
+    driver: bridge
+
+volumes:
+  mariadb_data:

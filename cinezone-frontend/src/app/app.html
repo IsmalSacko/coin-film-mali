@@ -1,0 +1,29 @@
+<div class="container mt-4">
+  <div class="row">
+    <!-- Boucle sur les films -->
+    @for (movie of movies(); track movie.id) {
+      <div class="col-md-3 mb-4">
+        <div class="card h-100 shadow-sm">
+          <img 
+            src="https://via.placeholder.com/300x400?text={{movie.title}}" 
+            class="card-img-top" 
+            alt="{{ movie.title }}"
+          >
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Titre : {{ movie.title }} </h5>
+            @if (movie.category_id) {
+              <p class="card-text mb-1"><strong>Catégorie :</strong> {{movie.Category?.name }}</p>
+            }
+            <p class="card-text mb-1"><strong>Année :</strong> {{ movie.release_year }}</p>
+            <p class="card-text mb-2"><strong>Réalisateur :</strong> {{ movie.director || 'Inconnu' }}</p>
+            <p>Notes : <span class="badge bg-warning ">{{ movie.rating }} <i class="bi bi-star-fill"></i></span></p>
+            <a href="#" class="btn btn-primary mt-auto">Regarder</a>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
+
+<router-outlet />
